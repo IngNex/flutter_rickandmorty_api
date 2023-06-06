@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -55,8 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          crossAxisSpacing: 0.0,
-                          mainAxisSpacing: 0.0,
+                          crossAxisSpacing: 1.0,
+                          mainAxisSpacing: 1.0,
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           var name = snapshot.data![index].name;
@@ -65,67 +65,63 @@ class _HomeScreenState extends State<HomeScreen> {
                           var image = snapshot.data![index].image;
                           return Stack(
                             children: [
-                              Positioned(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 50, 10, 10),
-                                  child: Card(
-                                    elevation: 6,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    shadowColor: Colors.green,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: 15,
-                                                width: 15,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50),
-                                                    color: status == 'Dead'
-                                                        ? Colors.red
-                                                        : status == 'Alive'
-                                                            ? Colors.green
-                                                            : Colors.grey),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 35,
-                                          ),
-                                          Text(
-                                            name,
-                                            style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 50, 10, 10),
+                                child: Card(
+                                  elevation: 6,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  shadowColor: Colors.green,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 15,
+                                              width: 15,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(50),
+                                                  color: status == 'Dead'
+                                                      ? Colors.red
+                                                      : status == 'Alive'
+                                                          ? Colors.green
+                                                          : Colors.grey),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 35,
+                                        ),
+                                        Text(
+                                          name,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.topCenter,
-                                child: Positioned(
-                                  child: Card(
-                                    elevation: 6,
-                                    shadowColor: Colors.green,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(50)),
-                                    child: CircleAvatar(
-                                        radius: 45,
-                                        backgroundImage: NetworkImage(image)),
+                                child: Card(
+                                  elevation: 6,
+                                  shadowColor: Colors.green,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: CircleAvatar(
+                                    radius: 45,
+                                    backgroundImage: NetworkImage(image),
+                                    backgroundColor: Colors.green,
                                   ),
                                 ),
                               ),
@@ -134,6 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       );
                     }
+                  } else if (snapshot.hasError) {
+                    return Text("${snapshot.error}");
                   } else {
                     return const SizedBox.shrink();
                   }
