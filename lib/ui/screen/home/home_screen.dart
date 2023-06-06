@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               flex: 5,
               child: GridView.builder(
-                itemCount: 5,
+                itemCount: 10,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 0.0,
@@ -42,21 +42,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Stack(
                       children: [
                         Positioned(
-                          bottom: 5,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 5),
+                            padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
                             child: Card(
                               elevation: 5,
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.all(10),
                                 child: Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
                                   children: [
-                                    Text('Rick'),
-                                    Text('Rick'),
-                                    Text('Rick')
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 10,
+                                          width: 10,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: Colors.green),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 35,
+                                    ),
+                                    Text(
+                                      'Nombre',
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -66,10 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         Align(
                           alignment: Alignment.topCenter,
                           child: Positioned(
-                            top: 0,
-                            child: CircleAvatar(
-                                radius: 40,
-                                child: Icon(Icons.verified_user_rounded)),
+                            child: Card(
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: CircleAvatar(
+                                  radius: 45,
+                                  child: Icon(Icons.verified_user_rounded)),
+                            ),
                           ),
                         ),
                       ],
