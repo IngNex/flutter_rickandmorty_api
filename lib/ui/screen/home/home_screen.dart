@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rickandmorty_api/data/api/api.dart';
 import 'package:flutter_rickandmorty_api/domain/models/characters_modals.dart';
+import 'package:number_paginator/number_paginator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Character>> futureCharacter;
+  int _numPages = 42;
+  int _currentPage = 0;
 
   @override
   void initState() {
@@ -21,8 +24,114 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //List generate pages
+    var pages = List.generate(
+      _numPages,
+      (index) => FutureBuilder<List<Character>>(
+        future: futureCharacter,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data!.isEmpty) {
+              return Center(
+                child: Text('Not Data Available'),
+              );
+            } else {
+              return GridView.builder(
+                itemCount: snapshot.data!.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 1.0,
+                  mainAxisSpacing: 1.0,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  var name = snapshot.data![index].name;
+                  var status = snapshot.data![index].status;
+                  var image = snapshot.data![index].image;
+                  return Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
+                        child: Card(
+                          elevation: 6,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          shadowColor: Colors.green,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 15,
+                                      width: 15,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: status == 'Dead'
+                                            ? Colors.red
+                                            : status == 'Alive'
+                                                ? Colors.green
+                                                : Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 40,
+                                ),
+                                Text(
+                                  name,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Card(
+                          elevation: 6,
+                          shadowColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: CircleAvatar(
+                            radius: 45,
+                            backgroundImage: NetworkImage(image),
+                            backgroundColor: Colors.green,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.green),
+            );
+          }
+        },
+      ),
+    );
+
     return Scaffold(
-      appBar: AppBar(title: Text('Rick And Morty')),
+      appBar: AppBar(
+        title: Text('Rick And Morty'),
+        backgroundColor: Colors.green,
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -66,103 +175,45 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               flex: 5,
-              child: FutureBuilder<List<Character>>(
-                future: futureCharacter,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data!.isEmpty) {
-                      return Center(
-                        child: Text('Not Data Available'),
-                      );
-                    } else {
-                      return GridView.builder(
-                        itemCount: snapshot.data!.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 1.0,
-                          mainAxisSpacing: 1.0,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          var name = snapshot.data![index].name;
-                          var status = snapshot.data![index].status;
-
-                          var image = snapshot.data![index].image;
-                          return Stack(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 50, 10, 10),
-                                child: Card(
-                                  elevation: 6,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  shadowColor: Colors.green,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              height: 15,
-                                              width: 15,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                  color: status == 'Dead'
-                                                      ? Colors.red
-                                                      : status == 'Alive'
-                                                          ? Colors.green
-                                                          : Colors.grey),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 35,
-                                        ),
-                                        Text(
-                                          name,
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Card(
-                                  elevation: 6,
-                                  shadowColor: Colors.green,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: CircleAvatar(
-                                    radius: 45,
-                                    backgroundImage: NetworkImage(image),
-                                    backgroundColor: Colors.green,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
-              ),
+              child: pages[_currentPage],
             ),
+            // Container(
+            //   height: 50,
+            //   child: pages[_currentPage],
+            // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: NumberPaginator(
+                // by default, the paginator shows numbers as center content
+                numberPages: _numPages,
+                onPageChange: (int index) {
+                  setState(() {
+                    _currentPage = index;
+                    futureCharacter = Api.getCharacter(
+                        'https://rickandmortyapi.com/api/character?page=${_currentPage + 1}'); // _currentPage is a variable within State of StatefulWidget
+                  });
+                },
+                // initially selected index
+                //initialPage: 4,
+                config: NumberPaginatorUIConfig(
+                    height: 50,
+                    buttonSelectedBackgroundColor: Colors.green,
+                    buttonSelectedForegroundColor: Colors.black,
+                    //buttonUnselectedBackgroundColor: Colors.red,
+                    buttonUnselectedForegroundColor: Colors.green),
+                // config: NumberPaginatorUIConfig(
+                //   // default height is 48
+                //   height: 64,
+                //   buttonShape: BeveledRectangleBorder(
+                //     borderRadius: BorderRadius.circular(15),
+                //   ),
+                //   buttonSelectedForegroundColor: Colors.yellow,
+                //   buttonUnselectedForegroundColor: Colors.white,
+                //   buttonUnselectedBackgroundColor: Colors.grey,
+                //   buttonSelectedBackgroundColor: Colors.blueGrey,
+                // ),
+              ),
+            )
           ],
         ),
       ),
