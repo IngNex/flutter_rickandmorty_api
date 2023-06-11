@@ -153,8 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    style: TextStyle(color: Theme.of(context).shadowColor),
                     decoration: InputDecoration(
-                      hoverColor: Colors.amber,
                       hintText: 'Search character',
                       hintStyle: TextStyle(
                         fontSize: 15,
@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // ),
             Container(
               decoration: BoxDecoration(
-                  color: Colors.green,
+                  color: Theme.of(context).canvasColor,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25))),
@@ -203,8 +203,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   config: NumberPaginatorUIConfig(
                     height: 50,
                     buttonSelectedBackgroundColor: Colors.white,
-                    buttonSelectedForegroundColor: Colors.green,
-                    buttonUnselectedBackgroundColor: Colors.green,
+                    buttonSelectedForegroundColor:
+                        Theme.of(context).canvasColor,
+                    buttonUnselectedBackgroundColor:
+                        Theme.of(context).canvasColor,
                     buttonUnselectedForegroundColor: Colors.white,
                   ),
                 ),
