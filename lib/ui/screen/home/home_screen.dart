@@ -52,11 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
                         child: Card(
-                          elevation: 6,
+                          elevation: 5,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          shadowColor: Colors.green,
+                          //shadowColor: Colors.green,
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Column(
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         alignment: Alignment.topCenter,
                         child: Card(
                           elevation: 6,
-                          shadowColor: Colors.green,
+                          //shadowColor: Colors.green,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
@@ -129,7 +129,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Rick And Morty'),
-        backgroundColor: Colors.green,
         centerTitle: true,
       ),
       body: SafeArea(
@@ -154,8 +153,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 10,
                   ),
                   TextFormField(
-                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
+                      hoverColor: Colors.amber,
                       hintText: 'Search character',
                       hintStyle: TextStyle(
                         fontSize: 15,
@@ -181,37 +180,34 @@ class _HomeScreenState extends State<HomeScreen> {
             //   height: 50,
             //   child: pages[_currentPage],
             // ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: NumberPaginator(
-                // by default, the paginator shows numbers as center content
-                numberPages: _numPages,
-                onPageChange: (int index) {
-                  setState(() {
-                    _currentPage = index;
-                    futureCharacter = Api.getCharacter(
-                        'https://rickandmortyapi.com/api/character?page=${_currentPage + 1}'); // _currentPage is a variable within State of StatefulWidget
-                  });
-                },
-                // initially selected index
-                //initialPage: 4,
-                config: NumberPaginatorUIConfig(
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(25),
+                      topRight: Radius.circular(25))),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: NumberPaginator(
+                  // by default, the paginator shows numbers as center content
+                  numberPages: _numPages,
+                  onPageChange: (int index) {
+                    setState(() {
+                      _currentPage = index;
+                      futureCharacter = Api.getCharacter(
+                          'https://rickandmortyapi.com/api/character?page=${_currentPage + 1}'); // _currentPage is a variable within State of StatefulWidget
+                    });
+                  },
+                  // initially selected index
+                  initialPage: 0,
+                  config: NumberPaginatorUIConfig(
                     height: 50,
-                    buttonSelectedBackgroundColor: Colors.green,
-                    buttonSelectedForegroundColor: Colors.black,
-                    //buttonUnselectedBackgroundColor: Colors.red,
-                    buttonUnselectedForegroundColor: Colors.green),
-                // config: NumberPaginatorUIConfig(
-                //   // default height is 48
-                //   height: 64,
-                //   buttonShape: BeveledRectangleBorder(
-                //     borderRadius: BorderRadius.circular(15),
-                //   ),
-                //   buttonSelectedForegroundColor: Colors.yellow,
-                //   buttonUnselectedForegroundColor: Colors.white,
-                //   buttonUnselectedBackgroundColor: Colors.grey,
-                //   buttonSelectedBackgroundColor: Colors.blueGrey,
-                // ),
+                    buttonSelectedBackgroundColor: Colors.white,
+                    buttonSelectedForegroundColor: Colors.green,
+                    buttonUnselectedBackgroundColor: Colors.green,
+                    buttonUnselectedForegroundColor: Colors.white,
+                  ),
+                ),
               ),
             )
           ],
