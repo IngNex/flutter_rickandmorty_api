@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rickandmorty_api/data/api/api.dart';
 import 'package:flutter_rickandmorty_api/domain/models/characters_modals.dart';
+import 'package:flutter_rickandmorty_api/ui/screen/personage/personage_screen.dart';
 import 'package:number_paginator/number_paginator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -47,70 +48,83 @@ class _HomeScreenState extends State<HomeScreen> {
                   var name = snapshot.data![index].name;
                   var status = snapshot.data![index].status;
                   var image = snapshot.data![index].image;
-                  return Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
-                        child: Card(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PersonageScreen(
+                            personageData: snapshot.data![index],
                           ),
-                          //shadowColor: Colors.green,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 15,
-                                      width: 15,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: status == 'Dead'
-                                            ? Colors.red
-                                            : status == 'Alive'
-                                                ? Colors.green
-                                                : Colors.grey,
+                        ),
+                      );
+                    },
+                    child: Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 50, 10, 10),
+                          child: Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            //shadowColor: Colors.green,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 15,
+                                        width: 15,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color: status == 'Dead'
+                                              ? Colors.red
+                                              : status == 'Alive'
+                                                  ? Colors.green
+                                                  : Colors.grey,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 40,
-                                ),
-                                Text(
-                                  name,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 40,
+                                  ),
+                                  Text(
+                                    name,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Card(
-                          elevation: 6,
-                          //shadowColor: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: CircleAvatar(
-                            radius: 45,
-                            backgroundImage: NetworkImage(image),
-                            backgroundColor: Colors.green,
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Card(
+                            elevation: 6,
+                            //shadowColor: Colors.green,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: CircleAvatar(
+                              radius: 45,
+                              backgroundImage: NetworkImage(image),
+                              backgroundColor: Colors.green,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 },
               );
