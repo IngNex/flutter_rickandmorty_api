@@ -23,6 +23,7 @@ class Api {
         origin: index['origin'],
         location: index['location'],
         image: index['image'],
+        episode: index['episode'],
       );
       characterData.add(jsonCharacter);
     }

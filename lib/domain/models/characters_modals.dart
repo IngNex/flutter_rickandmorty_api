@@ -8,6 +8,7 @@ class Character {
   final Map origin;
   final Map location;
   final String image;
+  final List episode;
   Character({
     required this.id,
     required this.name,
@@ -18,21 +19,22 @@ class Character {
     required this.origin,
     required this.location,
     required this.image,
+    required this.episode,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'name': name,
-      'status': status,
-      'species': species,
-      'type': type,
-      'gender': gender,
-      'origin': origin,
-      'location': location,
-      'image': image,
-    };
-  }
+  // Map<String, dynamic> toMap() {
+  //   return <String, dynamic>{
+  //     'id': id,
+  //     'name': name,
+  //     'status': status,
+  //     'species': species,
+  //     'type': type,
+  //     'gender': gender,
+  //     'origin': origin,
+  //     'location': location,
+  //     'image': image,
+  //   };
+  // }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> map = <String, dynamic>{};
@@ -46,6 +48,7 @@ class Character {
     map['origin'] = origin;
     map['location'] = location;
     map['image'] = image;
+    map['episode'] = episode;
     return map;
   }
 }

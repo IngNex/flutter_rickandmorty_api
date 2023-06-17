@@ -33,6 +33,12 @@ class MyApp extends StatelessWidget {
       cardTheme: CardTheme(
         color: cardLight,
         shadowColor: green,
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            20,
+          ),
+        ),
       ),
       hintColor: black,
       canvasColor: green,
@@ -53,6 +59,12 @@ class MyApp extends StatelessWidget {
       cardTheme: CardTheme(
         shadowColor: black,
         color: cardDark,
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            20,
+          ),
+        ),
       ),
       hintColor: white,
       highlightColor: Colors.green,

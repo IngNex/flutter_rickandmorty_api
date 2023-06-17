@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         MaterialPageRoute(
                           builder: (_) => PersonageScreen(
                             personageData: snapshot.data![index],
+                            heroTag: index,
                           ),
                         ),
                       );
@@ -116,10 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            child: CircleAvatar(
-                              radius: 45,
-                              backgroundImage: NetworkImage(image),
-                              backgroundColor: Colors.green,
+                            child: Hero(
+                              tag: index,
+                              child: CircleAvatar(
+                                radius: 45,
+                                backgroundImage: NetworkImage(image),
+                                backgroundColor: Colors.green,
+                              ),
                             ),
                           ),
                         ),
@@ -139,6 +143,16 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+
+    // void _runFilter(String enterKeyWord) {
+    //   Future<List<Character>> character;
+    //   if (enterKeyWord.isEmpty) {
+    //     character = futureCharacter;
+    //   } else {
+    //     character = futureCharacter.then((user) =>
+    //         user.['name'].toLowerCase().contains(enterKeyWord.toLowerCase()));
+    //   }
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -167,6 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 10,
                   ),
                   TextFormField(
+                    //onChanged: (value) => _runFilter(value),
                     style: TextStyle(color: Theme.of(context).shadowColor),
                     decoration: InputDecoration(
                       hintText: 'Search character',
